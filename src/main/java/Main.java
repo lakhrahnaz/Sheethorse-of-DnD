@@ -14,7 +14,6 @@ public class Main extends ListenerAdapter {
         JDABuilder builder = new JDABuilder(AccountType.BOT);
         String input = new String(Files.readAllBytes(Paths.get("token.txt")));
         String token = input;
-        //String token = "NTQ4MDI1OTcwOTE3OTAwMjg5.D0_eZg.4Xi5n3WBpgDSujUMWYZsSIAyrbY";
         builder.setToken(token);
         builder.addEventListener(new Main());
         builder.buildAsync();
