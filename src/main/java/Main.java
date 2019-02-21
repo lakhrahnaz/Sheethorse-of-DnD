@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.Random;
 
 import javax.security.auth.login.LoginException;
 
@@ -30,6 +31,33 @@ public class Main extends ListenerAdapter {
         }
         if(event.getMessage().getContentRaw().equals("!ass")) {
             event.getChannel().sendMessage("ASS").queue();
+        }
+
+        else if (event.getMessage().getContentRaw().contains("!roll")){
+            String rollin = event.getMessage().getContentRaw();
+            String[] prep = rollin.split(" ");
+            String diceinput = prep[1];
+            if (diceinput.contains("d")) {
+                String[] parts = diceinput.split("d");
+                String numdie = parts[0];
+                String dienum = parts[1];
+                Random rand = new Random();
+
+                int numofdie = Integer.parseInt(numdie);
+                int dieofnum = Integer.parseInt(dienum);
+                int sum = 0;
+                for (int i = 1; i < numofdie+1; i++){
+                    int dieresult = rand.nextInt(dieofnum)+1;
+                    String printable = ("Result of roll " + i + " : " + dieresult).toString();
+                    event.getChannel().sendMessage(printable).queue();
+                    sum = sum + dieresult;
+                }
+                String finalprint = ("Sum of rolls: " + sum).toString();
+                event.getChannel().sendMessage(finalprint).queue();
+            }
+            else {
+                throw new IllegalArgumentException("Error: Dice not found");
+            }
         }
         else if (event.getMessage().getContentRaw().contains("ass")) {
             event.getChannel().sendMessage("asses").queue();
