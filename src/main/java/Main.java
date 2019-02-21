@@ -29,7 +29,15 @@ public class Main extends ListenerAdapter {
         if(event.getAuthor().isBot()) {
             return;
         }
-        if(event.getMessage().getContentRaw().equals("!ass")) {
+        if (event.getMessage().getContentRaw().equals("!asshelp")) {
+            event.getChannel().sendMessage("Bot Functions: ").queue();
+            event.getChannel().sendMessage("!ass        Summons ASS").queue();
+            event.getChannel().sendMessage("!roll ndx   Rolls a dx n times").queue();
+            //event.getChannel().sendMessage("Wait, that's all the bot can do?").queue();
+            //event.getChannel().sendMessage("What a disappointing bot...").queue();
+            //event.getChannel().sendMessage("Nai waa...").queue();
+        }
+        else if(event.getMessage().getContentRaw().equals("!ass")) {
             event.getChannel().sendMessage("ASS").queue();
         }
 
@@ -59,10 +67,14 @@ public class Main extends ListenerAdapter {
                 throw new IllegalArgumentException("Error: Dice not found");
             }
         }
-        else if (event.getMessage().getContentRaw().contains("ass")) {
+        else if (event.getMessage().getContentRaw().contains("ass") || event.getMessage().getContentRaw().contains("Ass") || event.getMessage().getContentRaw().contains("ASS")) {
             event.getChannel().sendMessage("asses").queue();
         }
+        else if (event.getMessage().getContentRaw().contains("warframe") || event.getMessage().getContentRaw().contains("Warframe") || event.getMessage().getContentRaw().contains("WARFRAME")) {
+            event.getChannel().sendMessage("Blookh doesn't have a PROBLEM!").queue();
+        }
     }
+
 
 
 }
