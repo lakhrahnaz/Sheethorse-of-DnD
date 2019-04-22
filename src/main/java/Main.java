@@ -50,6 +50,8 @@ public class Main extends ListenerAdapter {
             event.getChannel().sendMessage("!ass        Summons ASS").queue();
             event.getChannel().sendMessage("!roll ndx   Rolls a dx n times").queue();
             event.getChannel().sendMessage("!ur         Displays the link to the unofficial rules").queue();
+            event.getChannel().sendMessage("!shop       Displays the link to the shop document").queue();
+            event.getChannel().sendMessage("!ktf        Converts kilometers to feet with a time estimate").queue();
             event.getChannel().sendMessage("!die        Matt-magic command, nobody else should use this to avoid spoilers").queue();
             //event.getChannel().sendMessage("Wait, that's all the bot can do?").queue();
             //event.getChannel().sendMessage("What a disappointing bot...").queue();
@@ -83,7 +85,7 @@ public class Main extends ListenerAdapter {
                 throw new IllegalArgumentException("Error: Dice not found");
             }
 
-        } else if (event.getMessage().getContentRaw().contains("!die")/*&&event.getMessage().getAuthor().getName() == "hullbreach"*/) {
+        } else if (event.getMessage().getContentRaw().equals("!die")/*&&event.getMessage().getAuthor().getName() == "hullbreach"*/) {
 
             Random mattrand = new Random();
             int rollchicken = mattrand.nextInt(20) + 1;
@@ -98,11 +100,36 @@ public class Main extends ListenerAdapter {
                 event.getChannel().sendMessage("Rolled a " + outcome + ".").queue();
                 event.getChannel().sendMessage(response).queue();
             }
+        }else if (event.getMessage().getContentRaw().equals("!die100")) {
+            Random mattrand = new Random();
+            int rollchicken = mattrand.nextInt(20) + 1;
+            int outcome = 0;
+            if (rollchicken < 30) {
+                outcome = mattrand.nextInt(100) + 1;
+            }
+            if (outcome == 0) {
+                event.getChannel().sendMessage("Rolled a " + rollchicken + ". Effect failed to occur.").queue();
+            } else {
+                String response = results.get(outcome - 1);
+                event.getChannel().sendMessage("Rolled a " + outcome + ".").queue();
+                event.getChannel().sendMessage(response).queue();
+            }
 
 
         } else if (event.getMessage().getContentRaw().contentEquals("!ur")) {
             event.getChannel().sendMessage("Unofficial rules: https://docs.google.com/document/d/1ix5Xemnw059fKiMGwf-hJWjN43LLVBNE2DL84G1nSNc/edit?usp=sharing").queue();
-        } else if (event.getMessage().getContentRaw().contains("ass") || event.getMessage().getContentRaw().contains("Ass") || event.getMessage().getContentRaw().contains("ASS")) {
+        } else if (event.getMessage().getContentRaw().contains("!ktf")) {
+            String kilotemp = event.getMessage().getContentRaw();
+            String[] calctemp = kilotemp.split(" ");
+            String numkilo = calctemp[1];
+            double numkm = Double.parseDouble(numkilo);
+            double feet = numkm*3290.84;
+            event.getChannel().sendMessage(numkilo + "Kilometers = " + feet + " feet.").queue();
+
+        } else if (event.getMessage().getContentRaw().contentEquals("!shop")) {
+            event.getChannel().sendMessage("Shop Link: https://docs.google.com/spreadsheets/d/1oPgrms_KnJHn2mKNcP30-qnMXksu88TDrGXQtHcS_ww/edit?usp=sharing").queue();
+
+        }else if (event.getMessage().getContentRaw().contains("ass") || event.getMessage().getContentRaw().contains("Ass") || event.getMessage().getContentRaw().contains("ASS")) {
             event.getChannel().sendMessage("asses").queue();
         } else if (event.getMessage().getContentRaw().contains("warframe") || event.getMessage().getContentRaw().contains("Warframe") || event.getMessage().getContentRaw().contains("WARFRAME")) {
             event.getChannel().sendMessage("The first stage is denial.").queue();
