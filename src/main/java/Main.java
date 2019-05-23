@@ -22,7 +22,8 @@ public class Main extends ListenerAdapter {
     public static Path primed = Paths.get("PrimedChamber.png");
     public static void main(String[] args) throws LoginException, IOException {
         JDABuilder builder = new JDABuilder(AccountType.BOT);
-        String input = new String(Files.readAllBytes(Paths.get("token.txt")));
+        //String input = new String(Files.readAllBytes(Paths.get("token.txt")));
+        String input = System.getenv("token");
         String token = input;
         results = Files.readAllLines(Paths.get("Unearthed_metronome_table.txt"));
 
