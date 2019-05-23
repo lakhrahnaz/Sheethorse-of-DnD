@@ -3,6 +3,7 @@ plugins {
     id 'application'
 
 }
+mainClassName = 'com.mywebsite.Main'
 
 group 'com.mywebsite'
 version '1.0-SNAPSHOT'
