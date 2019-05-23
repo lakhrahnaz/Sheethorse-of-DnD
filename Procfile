@@ -1,1 +1,1 @@
-web: javac Main.java
+web: java -cp target/classes/:target/dependency/* com.mywebsite.Main
