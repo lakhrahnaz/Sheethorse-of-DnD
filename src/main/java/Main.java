@@ -22,8 +22,8 @@ public class Main extends ListenerAdapter {
     public static Path primed = Paths.get("PrimedChamber.png");
     public static void main(String[] args) throws LoginException, IOException {
         JDABuilder builder = new JDABuilder(AccountType.BOT);
-        //String input = new String(Files.readAllBytes(Paths.get("token.txt")));
-        String input = System.getenv("token");
+        String input = new String(Files.readAllBytes(Paths.get("token.txt")));
+        //String input = System.getenv("token");
         String token = input;
         results = Files.readAllLines(Paths.get("Unearthed_metronome_table.txt"));
 
@@ -46,14 +46,23 @@ public class Main extends ListenerAdapter {
         if (event.getAuthor().isBot()) {
             return;
         }
-        if (event.getMessage().getContentRaw().equals("!asshelp")) {
-            event.getChannel().sendMessage("Bot Functions: ").queue();
+        if (event.getMessage().getContentRaw().equals("!help")) {
+            /*event.getChannel().sendMessage("Bot Functions: ").queue();
             event.getChannel().sendMessage("!ass        Summons ASS").queue();
             event.getChannel().sendMessage("!roll ndx   Rolls a dx n times").queue();
             event.getChannel().sendMessage("!ur         Displays the link to the unofficial rules").queue();
             event.getChannel().sendMessage("!shop       Displays the link to the shop document").queue();
             event.getChannel().sendMessage("!ktf        Converts kilometers to feet with a time estimate").queue();
             event.getChannel().sendMessage("!die        Matt-magic command, nobody else should use this to avoid spoilers").queue();
+            event.getChannel().sendMessage("!gw         Calculates current number of boxes and tokens to reach 44 box.").queue();*/
+            event.getChannel().sendMessage("```" + "Bot Functions: " + "\n" +
+                            "!ass        Summons ASS" + "\n" +
+                            "!roll ndx   Rolls a dx n times" + "\n" +
+                            "!ur         Displays the link to the unofficial rules" + "\n" +
+                            "!shop       Displays the link to the shop document" + "\n" +
+                            "!ktf        Converts kilometers to feet with a time estimate" + "\n" +
+                            "!die        Matt-magic command, nobody else should use this to avoid spoilers"+ "\n" +
+                            "!gw         Calculates current number of boxes and tokens to reach 44 box."+"```").queue();
             //event.getChannel().sendMessage("Wait, that's all the bot can do?").queue();
             //event.getChannel().sendMessage("What a disappointing bot...").queue();
             //event.getChannel().sendMessage("Nai waa...").queue();
@@ -131,10 +140,68 @@ public class Main extends ListenerAdapter {
             event.getChannel().sendMessage("Shop Link: https://docs.google.com/spreadsheets/d/1oPgrms_KnJHn2mKNcP30-qnMXksu88TDrGXQtHcS_ww/edit?usp=sharing").queue();
 
         }else if (event.getMessage().getContentRaw().contains("ass") || event.getMessage().getContentRaw().contains("Ass") || event.getMessage().getContentRaw().contains("ASS")) {
-            event.getChannel().sendMessage("asses").queue();
+            event.getChannel().sendMessage("ass").queue();
         } else if (event.getMessage().getContentRaw().contains("warframe") || event.getMessage().getContentRaw().contains("Warframe") || event.getMessage().getContentRaw().contains("WARFRAME")) {
             event.getChannel().sendMessage("The first stage is denial.").queue();
             event.getChannel().sendFile(primed.toFile()).queue();
+        } else if (event.getMessage().getContentRaw().contains("!gw")) {
+            String tokentemp = event.getMessage().getContentRaw();
+            String[] tokencalc = tokentemp.split(" ");
+            String numtoken = tokencalc[1];
+            int token = Integer.parseInt(numtoken);
+            int tokenleft = 88800 - token;
+            int boxcount = 0;
+            if (token < 1600 ) {
+                boxcount = 0;
+            }
+            else if (token >= 1600 && token < 4000) {
+                boxcount = 1;
+            }
+            else if (token >= 4000 && token < 6400) {
+                boxcount = 2;
+            }
+            else if (token >= 6400 && token < 8800) {
+                boxcount = 3;
+            }
+            else if (token >= 8800 && token < 10800) {
+                boxcount = 4;
+            }
+            else if (token >=10800 && token < 88800){
+                int tokenremain = token - 8800;
+                boxcount = tokenremain / 2000;
+                boxcount = boxcount + 4;
+            }
+            else if (token >=88800 && token < 90800){
+                boxcount = 44;
+            }
+            else if (token >= 90800 && token < 95800){
+                boxcount = 45;
+            }
+            else {
+                int tokenremain = token - 95800;
+                boxcount = tokenremain / 5000;
+                boxcount = boxcount + 45;
+            }
+
+            if(boxcount<=44){
+                int boxremain = 44 - boxcount;
+                event.getChannel().sendMessage("Number of boxes farmed = " + boxcount + ".").queue();
+                event.getChannel().sendMessage("Number of boxes remaining = " + boxremain + ".").queue();
+                event.getChannel().sendMessage("Number of tokens remaining = " + tokenleft + ".").queue();
+            }
+            else{
+                event.getChannel().sendMessage("Number of boxes farmed = " + boxcount + ".").queue();
+            }
+
+            //event.getChannel().sendMessage(event.getAuthor().getName()).queue();
+            if (event.getAuthor().getName().equalsIgnoreCase("blookh")) {
+                event.getChannel().sendMessage("You're insane").queue();
+                //.getChannel().sendMessage(event.getAuthor().toString()).queue();;
+                //U:blookh(196173687123083265)
+            }
+            else {
+                event.getChannel().sendMessage("Keep it up!").queue();
+            }
         }
     }
 
